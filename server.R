@@ -30,6 +30,7 @@ withProgress(message = "Retrait des données depuis le serveur", value = NULL, {
 
 ##### Prepare Data based on input #####
 data_map <- reactive({
+
   if(input$aggType == "by_obs"){
     df <- obs_cells
     legend <- "Nombre d'observations"
@@ -38,7 +39,20 @@ data_map <- reactive({
     legend <- "Nombre d'espèces"
   }
 
-  return(list(data=merge(cells,df,by="cell_code",all=TRUE), legend=legend))
+  if(!is.null(input$year)){
+      df <- subset(df, date_obs == input$year)
+  }
+
+  if(!is.null(input$type)){
+    if(input$type != "Toutes"){
+      df <- subset(df, type == tolower(input$type))
+    }
+  }
+
+  map_data <- merge(cells,df,by="cell_code",all=TRUE)
+  map_data[which(is.na(map_data$n)),"n"] <- 0
+
+  return(list(data=map_data, legend=legend))
 })
 
 ##### OUTPUTS #####
@@ -51,26 +65,66 @@ output$typeControl <- renderUI({
     selectInput("type", "Choisissez un type de campagne:", c("Toutes",firstup(unique(as.character(obs_cells$type)))))
 })
 
+# Export shapefile
+
+output$download_shp <- downloadHandler(
+    filename = "cells.zip",
+    content = function(file) {
+        # create a temp folder for shp files
+        temp_shp <- tempdir()
+        # write shp files
+        sf::st_write(data_map()$data, paste0(temp_shp,"/cells.shp"))
+        # zip all the shp files
+        zip_file <- file.path(temp_shp, "cells.zip")
+        shp_files <- list.files(temp_shp,
+                                "cells",
+                                full.names = TRUE)
+        print(shp_files)
+        # the following zip method works for me in linux but substitute with whatever method working in your OS
+        zip_command <- paste("zip -j",
+                             zip_file,
+                             paste(shp_files, collapse = " "))
+        system(zip_command)
+        # copy the zip file to the file argument
+        file.copy(zip_file, file)
+        # remove all the files created
+        file.remove(zip_file, shp_files)
+    }
+)
 
 # MAP
 output$cells_map <- renderLeaflet({
 
   pal <- colorNumeric(
-    palette = "YlOrBr",
-    domain = data_map()$n
+    palette = "GnBu",
+    domain = data_map()$data$n
   )
 
+  popup <- paste0("<strong>Code de la cellule: </strong>",
+                  data_map()$data$cell_code,
+                  "</br><strong>Nom de la cellule: </strong>",
+                  data_map()$data$name,
+                  "</br><strong>",
+                  data_map()$legend,
+                  ": </strong>",
+                  data_map()$data$n)
+
   leaflet(data_map()$data) %>%
-    addProviderTiles(providers$CartoDB.Positron,
-      options = providerTileOptions(noWrap = TRUE)
-    ) %>%
-    addPolygons(stroke = FALSE, smoothFactor = 0.5, fillOpacity = 0.8,
-    color = ~rev(pal(n))) %>%
+    addProviderTiles("OpenStreetMap.Mapnik", group = "Mapnik") %>%
+    addProviderTiles("Stamen.TonerLite",
+                     group = "Toner") %>%
+    addTiles(group = "OSM") %>%
+    addProviderTiles("Esri.WorldTopoMap",
+                     group = "Topo") %>%
+    addProviderTiles("CartoDB.Positron",     group = "CartoDB") %>%
+    addLayersControl(baseGroups = c("Mapnik", "Toner", "OSM", "Topo", "CartoDB"),
+                     options = layersControlOptions(collapsed = TRUE)) %>%
+    addPolygons(stroke = TRUE, smoothFactor = 0.5, fillOpacity = 0.8, color = "#323232",
+    fillColor = ~pal(n), popup = popup, weight = 2) %>%
     addLegend("bottomright", pal = pal, values = ~n,
       title = data_map()$legend,
       opacity = 1
     )
 
 })
-
 }

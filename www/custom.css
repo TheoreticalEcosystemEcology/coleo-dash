@@ -5,8 +5,20 @@ body {
   font-family: 'Lato';
 }
 
+.skin-blue .main-header .logo {
+    font-family: 'Ubuntu' !important;
+    font-weight: 700;
+    background-color: #2a6497ff;
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+
+.skin-blue .main-header .navbar {
+    background-color: #2a6497ff;
+}
+
 h1, h2 {
   font-family: 'Ubuntu';
   font-weight: 700;
-  color: #367fa9;
+  color: #2a6497ff;
 }

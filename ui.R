@@ -5,12 +5,10 @@ library(dplyr)
 
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Tableau de bord"),
+  dashboardHeader(title = "Coléo"),
   dashboardSidebar(
-    # The dynamically-generated user panel
-    uiOutput("userpanel"),
     sidebarMenu(
-      menuItem("Maps", tabName = "map", icon = icon("map")),
+      menuItem("Cartographie", tabName = "map", icon = icon("map")),
       menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
       menuItem("Widgets", tabName = "widgets", icon = icon("th")),
       menuItem("Trends", tabName = "trends", icon = icon("signal"))
@@ -19,22 +17,30 @@ ui <- dashboardPage(
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
     ),
+    tags$style(type = "text/css", "#cells_map {height: calc(75vh - 80px) !important;}"),
     tabItems(
       tabItem(tabName = "map",
         fluidRow(
+          h2("Cartographie par cellule", style="margin:15px;")
+        ),
+        fluidRow(
           box(width = 4,
-            selectInput("aggType", "Type d'aggrégation:", c("Nombre d'observations" = "by_obs", "Nombre d'espèces" = "by_sp") ,)
+            status = "primary",
+            uiOutput("typeControl")
           ),
           box(width = 4,
+            status = "primary",
             uiOutput("yearControl")
           ),
           box(width = 4,
-            uiOutput("typeControl")
+            status = "primary",
+            selectInput("aggType", "Choisissez un type d'aggrégation:", c("Nombre d'observations" = "by_obs", "Nombre d'espèces" = "by_sp"))
           )
         ),
         fluidRow(
-          box(width = 12,
-            leafletOutput("cells_map", height=500)
+          column(10, leafletOutput("cells_map")),
+          column(2,
+            div(downloadButton('download_shp', 'Exporter le shapefile'), style="width:140px;margin:10px")
           )
         )
       ),

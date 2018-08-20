@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="546.5437"
+   height="122.26312"
+   viewBox="0 0 546.5437 122.26312"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="coleo_logo_src.svg"
+   inkscape:export-filename="/Users/ielab/Documents/Gitlab/coleo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3765239"
+     inkscape:cx="232.63228"
+     inkscape:cy="-25.605739"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1859"
+     inkscape:window-height="1056"
+     inkscape:window-x="61"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     units="px"
+     height="160px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <sodipodi:guide
+       position="62.100827,580.24123"
+       orientation="0,1"
+       id="guide3354" />
+    <sodipodi:guide
+       position="198.05566,444.4217"
+       orientation="0,1"
+       id="guide4220" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-17.298872,-912.34934)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.10393524px;line-height:125%;font-family:'Gill Sans';-inkscape-font-specification:'Gill Sans';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#2a6497;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="15.584223"
+       y="958.81183"
+       id="text5622-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/local/USHERBROOKE/viss2501/Documents/Git/coleo/liv4/img/logo_src.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="scale(1.0086823,0.99139243)"><tspan
+         sodipodi:role="line"
+         id="tspan5624-4"
+         x="15.584223"
+         y="958.81183"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.10393524px;line-height:125%;font-family:'monofur for Powerline';-inkscape-font-specification:'monofur for Powerline';text-align:start;letter-spacing:-1.51562262px;word-spacing:1.25258076px;writing-mode:lr-tb;text-anchor:start;fill:#2a6497;fill-opacity:1">Coléo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:43.35238266px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="214.79501"
+       y="978.3974"
+       id="text5626-3"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/local/USHERBROOKE/viss2501/Documents/Git/coleo/liv4/img/logo_src.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="scale(1.0086823,0.99139243)"><tspan
+         sodipodi:role="line"
+         x="214.79501"
+         y="978.3974"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:26.01143074px;line-height:125%;font-family:'Gill Sans';-inkscape-font-specification:'Gill Sans, Light';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#333333"
+         id="tspan3358">Système d'information sur</tspan><tspan
+         sodipodi:role="line"
+         x="214.79501"
+         y="1010.9117"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:26.01143074px;line-height:125%;font-family:'Gill Sans';-inkscape-font-specification:'Gill Sans, Light';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#333333"
+         id="tspan4242">la biodiversité du Québec </tspan></text>
+    <path
+       d="m 147.8019,942.71442 c 0,0 6.61607,-10.61785 14.00892,-12.96236 1.28271,-0.3648 3.04703,-0.51538 3.92069,-0.33465 1.50601,0.31156 1.67758,0.21595 3.30393,-1.84242 2.68204,-3.39434 4.86398,-5.00369 7.36007,-5.42854 l 2.22483,-0.37871 -0.49677,-1.98812 c -0.43807,-1.75327 -0.34432,-2.22973 0.79363,-4.03308 1.75726,-2.78352 3.72131,-3.70361 7.07254,-3.31083 2.53932,0.29769 5.67245,1.75166 6.73504,3.12557 0.40253,0.52048 0.23838,0.6605 -1.0685,0.91153 -1.66979,0.3207 -2.99423,1.89875 -3.11026,3.70582 -0.12201,1.90164 1.93471,4.2486 5.76779,6.58137 3.83306,2.33282 6.88739,3.09645 8.56496,2.14148 1.44446,-0.82226 2.41312,-2.73967 2.08238,-4.12193 -0.16593,-0.69351 -0.0929,-1.36328 0.16271,-1.48833 0.91685,-0.44959 4.45487,2.17308 5.94705,4.40846 1.85139,2.77351 1.88937,4.91203 0.13668,7.69834 -1.13485,1.80523 -1.52753,2.09977 -3.31964,2.49574 l -2.03219,0.44904 0.64668,2.12627 c 0.7255,2.38552 0.23222,5.02257 -1.66403,8.89516 -1.14986,2.34829 -1.16053,2.5419 -0.20554,3.72808 1.74363,2.16584 2.35542,9.51037 0.97468,11.70193 -0.45353,2.94504 -35.76389,83.06076 -72.39479,67.91446 -3.8641,-1.6872 -4.91742,-2.3283 -8.17032,-4.9727 -27.31083,-29.3314 16.47084,-76.31779 22.76001,-85.02152 z m 9.4835,40.96808 c 6.07234,-9.91442 11.60473,-20.56823 11.60473,-20.56823 -3.04269,-3.62848 -6.71399,-5.75592 -9.20783,-7.2313 -7.37955,-4.35968 -8.40731,-3.38341 -10.65181,-3.55385 -15.73645,3.07699 -42.18238,57.13058 -20.45549,73.00388 l 0.85221,0.5636 c 10.83963,-15.9056 21.27349,-31.5653 27.85817,-42.214 z m -20.93312,45.8395 c 27.73187,3.1454 57.09255,-37.5084 54.83409,-51.53174 0.64384,-1.92478 -0.67353,-3.21198 -7.96274,-7.78017 -3.46815,-2.07888 -7.16132,-5.77891 -10.7292,-3.88906 -0.47171,0.35323 -6.21454,9.09267 -12.54716,18.85547 -8.25521,13.311 -16.15164,25.2788 -23.72991,38.1077 -2.91282,5.4603 -3.66465,4.9035 0.13496,6.2378 z m 56.35013,-56.51344 c 6.78366,0.17077 13.62319,-12.83026 10.23508,-19.16063 -6.81469,-9.85393 -34.25161,-21.9815 -34.25161,-21.9815 -9.35554,-2.37832 -20.88398,10.84799 -13.82363,18.85444 8.61026,5.36477 28.63827,17.94465 37.84016,22.28769 z"
+       id="path6319-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccssscssssssssssssscsssccccccccccccccccccccccc"
+       style="fill:#2a6497;fill-opacity:1"
+       inkscape:export-filename="/home/local/USHERBROOKE/viss2501/Documents/Git/coleo/liv4/img/logo_src.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>
