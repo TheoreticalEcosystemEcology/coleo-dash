@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="53.454304mm"
+   height="28.985302mm"
+   viewBox="0 0 189.40501 102.70383"
+   id="svg4218"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="logo_coleo_white.svg">
+  <defs
+     id="defs4220" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.89810848"
+     inkscape:cx="97.904233"
+     inkscape:cy="-3.4774809"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1-3"
+     showgrid="false"
+     inkscape:window-width="1859"
+     inkscape:window-height="1056"
+     inkscape:window-x="61"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata4223">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-157.94967,-287.59224)">
+    <g
+       transform="matrix(1.0688639,0,0,1.0688639,18.985681,-687.0283)"
+       id="layer1-3"
+       inkscape:label="Layer 1">
+      <text
+         transform="scale(1.0086823,0.99139243)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/local/USHERBROOKE/viss2501/Documents/Git/Talk_rcoleo/assets/img/coleo.png"
+         sodipodi:linespacing="125%"
+         id="text5622-8"
+         y="985.18604"
+         x="204.68195"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40.46047974px;line-height:125%;font-family:'monofur for Powerline';-inkscape-font-specification:'monofur for Powerline';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40.46047974px;line-height:125%;font-family:'monofur for Powerline';-inkscape-font-specification:'monofur for Powerline';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;"
+           y="985.18604"
+           x="204.68195"
+           id="tspan5624-4"
+           sodipodi:role="line">Coléo</tspan></text>
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/local/USHERBROOKE/viss2501/Documents/Git/Talk_rcoleo/assets/img/coleo.png"
+         style="fill:#ffffff;fill-opacity:1"
+         sodipodi:nodetypes="ccssscssssssssssssscsssccccccccccccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="path6319-3"
+         d="m 154.88061,935.69249 c 0,0 5.19959,-8.3446 11.00965,-10.18716 1.00809,-0.2867 2.39467,-0.40504 3.08129,-0.263 1.18357,0.24485 1.31841,0.16971 2.59656,-1.44797 2.10783,-2.66762 3.82262,-3.93241 5.78431,-4.2663 l 1.7485,-0.29763 -0.39042,-1.56247 c -0.34428,-1.3779 -0.2706,-1.75235 0.62372,-3.16961 1.38104,-2.18758 2.92459,-2.91068 5.55833,-2.60199 1.99566,0.23395 4.458,1.37663 5.29309,2.45639 0.31635,0.40905 0.18734,0.51909 -0.83974,0.71638 -1.31229,0.25204 -2.35317,1.49223 -2.44436,2.91241 -0.0959,1.49451 1.52049,3.33899 4.53292,5.17232 3.01242,1.83337 5.41282,2.43351 6.73123,1.683 1.13521,-0.64622 1.89648,-2.15312 1.63655,-3.23944 -0.1304,-0.54503 -0.073,-1.07141 0.12787,-1.16968 0.72056,-0.35334 3.5011,1.70783 4.67381,3.46462 1.45501,2.17971 1.48486,3.86038 0.10742,6.05015 -0.89189,1.41873 -1.20049,1.65021 -2.60892,1.96141 l -1.5971,0.3529 0.50823,1.67104 c 0.57017,1.87479 0.1825,3.94726 -1.30777,6.99074 -0.90368,1.84552 -0.91207,1.99768 -0.16154,2.92991 1.37033,1.70214 1.85114,7.47422 0.76601,9.19658 -0.35643,2.31451 -28.10695,65.27771 -56.89529,53.37411 -3.03681,-1.3259 -3.86462,-1.8298 -6.42108,-3.908 -21.46367,-23.05163 12.94448,-59.97837 17.88716,-66.81866 z m 7.45311,32.19694 c 4.77227,-7.79177 9.12019,-16.16464 9.12019,-16.16464 -2.39126,-2.85163 -5.27654,-4.52359 -7.23646,-5.6831 -5.79961,-3.42628 -6.60733,-2.65903 -8.37129,-2.79298 -12.36732,2.41822 -33.15126,44.8991 -16.07603,57.37389 l 0.66975,0.443 c 8.5189,-12.50024 16.71891,-24.80724 21.89383,-33.17609 z m -16.4514,36.02537 c 21.79456,2.472 44.86921,-29.47793 43.09428,-40.49892 0.50599,-1.51269 -0.52933,-2.5243 -6.25794,-6.11446 -2.72563,-1.6338 -5.62811,-4.54166 -8.43212,-3.05642 -0.37071,0.2776 -4.88402,7.14595 -9.86085,14.81857 -6.48779,10.46116 -12.69362,19.86669 -18.64941,29.94896 -2.28919,4.29127 -2.88006,3.85367 0.10607,4.90227 z m 44.28574,-44.41405 c 5.3313,0.13421 10.70651,-10.08334 8.04378,-15.0584 -5.35569,-7.74423 -26.91845,-17.27533 -26.91845,-17.27533 -7.35254,-1.86913 -16.41278,8.52547 -10.86403,14.81776 6.76683,4.21619 22.50691,14.10276 29.7387,17.51597 z" />
+    </g>
+  </g>
+</svg>
