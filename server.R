@@ -3,7 +3,9 @@ library(shiny)
 library(lubridate)
 library(plotly)
 library(RColorBrewer)
+library(vegan)
 devtools::load_all("../rcoleo/")
+source("./utils.R")
 
 server <- function(input, output, session) {
 
@@ -30,28 +32,34 @@ withProgress(message = "Retrait des données depuis le serveur", value = NULL, {
 
   # CAMPAGNES
   sites <- select(rcoleo::sf_sites(), site_code, off_station_code_id, type_milieu = type, geometry, site_id = id)
-  campaigns <- as.data.frame(rcoleo::get_campaigns())
-  sp_sites <- merge(sites, campaigns, by = "site_id")
 
   # On prépare les jeux de données pour chacun des types de campagnes
   microfaunes <- subset(all_obs, type == "microfaunes")
-  # comm_df <- microfaunes %>% filter(date_obs == 2016) %>% select(site_code,taxa,count) %>% group_by(site_code, taxa) %>% summarise(count=sum(count))
-  # comm_df <- reshape2::dcast(microfaunes, site_code ~ taxa, value.var="count", fill = 0, fun.aggregate=sum)
-  # row.names(comm_df) <- comm_df[,1]
-  # comm_df <- as.matrix(comm_df[,-1])
+  microfaunes %<>% filter(taxa != "inconnu")
 
-  # div <- vegan::diversity(comm_df)
-  # beta <- ncol(comm_df)/mean(vegan::specnumber(comm_df)) - 1
-  # comm.hel <- vegan::decostand(comm_df, method="hellinger")
-  # test <- adespatial::LCBD.comp(dist(comm.hel))
-  #
-  # comm.hel.mean = matrix(colMeans(comm.hel),nrow = nrow(comm.hel), ncol = ncol(comm.hel), byrow = TRUE)
-  # comm2 = (comm.hel - comm.hel.mean)^2
-  # SStot = sum(comm2)
-  # SSsp = colSums(comm2)
 })
 
-##### Prepare Data based on input #####
+
+###########################
+##### GENERIC OUTPUTS #####
+###########################
+
+output$yearControl <- renderUI({
+    selectInput("year_cells", "Choisissez une année:", unique(obs_cells$date_obs))
+})
+
+output$yearControl_micro <- renderUI({
+    selectInput("year_micro", "Choisissez une année:", unique(obs_cells$date_obs))
+})
+
+output$typeControl <- renderUI({
+    selectInput("type", "Choisissez un type de campagne:", c("Toutes",firstup(unique(as.character(obs_cells$type)))))
+})
+
+###########################
+#####    CELLS TAB    #####
+###########################
+
 data_map <- reactive({
 
   if(input$aggType == "by_obs"){
@@ -78,47 +86,8 @@ data_map <- reactive({
   return(list(data=map_data, legend=legend))
 })
 
-##### OUTPUTS #####
+###########
 
-output$yearControl <- renderUI({
-    selectInput("year_cells", "Choisissez une année:", unique(obs_cells$date_obs))
-})
-
-output$yearControl_micro <- renderUI({
-    selectInput("year_micro", "Choisissez une année:", unique(obs_cells$date_obs))
-})
-
-output$typeControl <- renderUI({
-    selectInput("type", "Choisissez un type de campagne:", c("Toutes",firstup(unique(as.character(obs_cells$type)))))
-})
-
-# Export shapefile
-output$download_shp <- downloadHandler(
-    filename = "cells.zip",
-    content = function(file) {
-        # create a temp folder for shp files
-        temp_shp <- tempdir()
-        # write shp files
-        sf::st_write(data_map()$data, paste0(temp_shp,"/cells.shp"))
-        # zip all the shp files
-        zip_file <- file.path(temp_shp, "cells.zip")
-        shp_files <- list.files(temp_shp,
-                                "cells",
-                                full.names = TRUE)
-        print(shp_files)
-        # the following zip method works for me in linux but substitute with whatever method working in your OS
-        zip_command <- paste("zip -j",
-                             zip_file,
-                             paste(shp_files, collapse = " "))
-        system(zip_command)
-        # copy the zip file to the file argument
-        file.copy(zip_file, file)
-        # remove all the files created
-        file.remove(zip_file, shp_files)
-    }
-)
-
-# MAP
 output$cells_map <- renderLeaflet({
 
   pal <- colorNumeric(
@@ -154,19 +123,42 @@ output$cells_map <- renderLeaflet({
 
 })
 
-# MICROFAUNES
+
+#########
+
+# Export shapefile
+output$download_shp <- downloadHandler(
+    filename = "cells.zip",
+    content = function(file) {
+        # create a temp folder for shp files
+        temp_shp <- tempdir()
+        # write shp files
+        sf::st_write(data_map()$data, paste0(temp_shp,"/cells.shp"))
+        # zip all the shp files
+        zip_file <- file.path(temp_shp, "cells.zip")
+        shp_files <- list.files(temp_shp,
+                                "cells",
+                                full.names = TRUE)
+        print(shp_files)
+        # the following zip method works for me in linux but substitute with whatever method working in your OS
+        zip_command <- paste("zip -j",
+                             zip_file,
+                             paste(shp_files, collapse = " "))
+        system(zip_command)
+        # copy the zip file to the file argument
+        file.copy(zip_file, file)
+        # remove all the files created
+        file.remove(zip_file, shp_files)
+    }
+)
+
+###########################
+##### MICROFAUNES TAB  ####
+###########################
+
 output$micro_carto <- renderLeaflet({
 
-  data <- microfaunes %>% filter(date_obs==input$year_micro)
-  data %<>% select(site_code,taxa,count) %>% group_by(site_code, taxa) %>% summarise(count=sum(count))
-  comm_df <- reshape2::dcast(data, site_code ~ taxa, value.var="count", fill = 0, fun.aggregate=sum)
-  row.names(comm_df) <- comm_df[,1]
-  comm_df <- as.matrix(comm_df[,-1])
-
-  rich_sp <- vegan::specnumber(comm_df)
-  eveness <- vegan::diversity(comm_df)/log(vegan::specnumber(comm_df))
-  geom_df <- data.frame(site_code = names(eveness), eveness, rich_sp)
-  geom_sf <- merge(sites, geom_df, by=c("site_code"))
+  geom_sf <- compute_desc_comm(microfaunes, sites, input$year_micro)
 
   pal <- colorNumeric(
     palette = "Spectral",
@@ -175,11 +167,13 @@ output$micro_carto <- renderLeaflet({
   )
 
   popup <- paste0("<strong>Code du site: </strong>",
-                  geom_df$site_code,
+                  geom_sf$site_code,
                   "</br><strong>Nombre d'espèces: </strong>",
-                  geom_df$rich_sp,
+                  geom_sf$rich_sp,
                   "</br><strong>Régularité des espèces: </strong>",
-                  round(geom_df$eveness, 2)
+                  round(geom_sf$eveness, 2),
+                  "</br><strong>Indice de Shanon-Weaver: </strong>",
+                  round(geom_sf$div, 2)
                 )
 
   leaflet(geom_sf) %>%
@@ -200,13 +194,93 @@ output$micro_carto <- renderLeaflet({
       title = "Richesse spécifique",
       opacity = 1
     )
-
-
-
 })
 
+##########
 
-# MAP
+output$micro_sp_beta <- renderPlotly({
+
+  SCBD <- compute_beta_scbd(microfaunes, input$year_micro)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(SCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(SCBD)){
+   p %<>% add_trace(x = SCBD[i,"val"], name = SCBD[i,"sp"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
+output$beta_micro <- renderInfoBox({
+
+  beta <- compute_beta(microfaunes, input$year_micro)
+
+  infoBox("Béta-diversité:", round(beta,3), icon = icon("bug"), fill = TRUE, color = "green")
+})
+
+##########
+
+output$micro_sites_beta <- renderPlotly({
+
+  LCBD <- compute_beta_lcbd(microfaunes, input$year_micro)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(LCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(LCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(LCBD)){
+   p %<>% add_trace(x = LCBD[i,"val"], name = LCBD[i,"site"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
 output$micro_compo <- renderPlotly({
 
   data <- microfaunes %>% filter(date_obs==input$year_micro) %>%
@@ -227,59 +301,5 @@ output$micro_compo <- renderPlotly({
 
 })
 
-
-# output$camp_map <- renderLeaflet({
-
-#   getColor <- function(quakes) {
-#     sapply(quakes$mag, function(mag) {
-#     if(mag <= 4) {
-#       "green"
-#     } else if(mag <= 5) {
-#       "orange"
-#     } else {
-#       "red"
-#     } })
-#   }
-#
-# icons <- awesomeIcons(
-#   icon = 'ios-close',
-#   iconColor = 'black',
-#   library = 'ion',
-#   markerColor = getColor(df.20)
-# )
-#
-#
-#
-#   pal <- colorNumeric(
-#     palette = "GnBu",
-#     domain = data_map()$data$n
-#   )
-#
-#   popup <- paste0("<strong>Code de la cellule: </strong>",
-#                   data_map()$data$cell_code,
-#                   "</br><strong>Nom de la cellule: </strong>",
-#                   data_map()$data$name,
-#                   "</br><strong>",
-#                   data_map()$legend,
-#                   ": </strong>",
-#                   data_map()$data$n)
-#
-#   leaflet(data_map()$data) %>%
-#     addProviderTiles("OpenStreetMap.Mapnik", group = "Mapnik") %>%
-#     addProviderTiles("Stamen.TonerLite",
-#                      group = "Toner") %>%
-#     addProviderTiles("Esri.WorldTopoMap",
-#                      group = "Topo") %>%
-#     addProviderTiles("CartoDB.Positron", group = "CartoDB") %>%
-#     addLayersControl(baseGroups = c("Mapnik", "Toner", "Topo", "CartoDB"),
-#                      options = layersControlOptions(collapsed = TRUE)) %>%
-#     addPolygons(stroke = TRUE, smoothFactor = 0.5, fillOpacity = 0.8,
-#     fillColor = ~pal(n), popup = popup, weight = 2) %>%
-#     addLegend("bottomright", pal = pal, values = ~n,
-#       title = data_map()$legend,
-#       opacity = 1
-#     )
-#
-# })
 
 }

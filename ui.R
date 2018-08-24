@@ -86,17 +86,29 @@ ui <- dashboardPage(
           h2("Analyse sur la microfaune", style="margin:15px;")
         ),
         fluidRow(
-          box(width = 4,
+        column(4,
+          box(width = 12,
             status = "primary",
             uiOutput("yearControl_micro")
-          )
-        ),
-        fluidRow(
-          box(width = 6, status = "primary",
           ),
-          box(width = 6, status = "primary",
-          )
+          infoBoxOutput("beta_micro", width = 12)
         ),
+        column(8,
+          box(width = 12,
+            status = "primary",
+            h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            plotlyOutput("micro_sp_beta", height = "90px"),
+            h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            plotlyOutput("micro_sites_beta", height = "90px")
+          )
+        )
+        ),
+        # fluidRow(
+        #   box(width = 6, status = "primary",
+        #   ),
+        #   box(width = 6, status = "primary",
+        #   )
+        # ),
         fluidRow(
           box(width = 6, status = "primary",
             h4("Composition des communautées", align="center", style="font-weight:700;"),
