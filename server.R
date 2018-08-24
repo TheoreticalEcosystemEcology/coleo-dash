@@ -37,6 +37,16 @@ withProgress(message = "Retrait des données depuis le serveur", value = NULL, {
   microfaunes <- subset(all_obs, type == "microfaunes")
   microfaunes %<>% filter(taxa != "inconnu")
 
+  papillons <- subset(all_obs, type == "papilionidés")
+  papillons %<>% filter(taxa != "inconnu")
+
+  odonates <- subset(all_obs, type == "odonates")
+  odonates %<>% filter(taxa != "inconnu")
+
+  vegetation <- subset(all_obs, type == "végétation")
+  vegetation %<>% filter(taxa != "inconnu")
+
+
 })
 
 
@@ -48,12 +58,24 @@ output$yearControl <- renderUI({
     selectInput("year_cells", "Choisissez une année:", unique(obs_cells$date_obs))
 })
 
-output$yearControl_micro <- renderUI({
-    selectInput("year_micro", "Choisissez une année:", unique(obs_cells$date_obs))
-})
-
 output$typeControl <- renderUI({
     selectInput("type", "Choisissez un type de campagne:", c("Toutes",firstup(unique(as.character(obs_cells$type)))))
+})
+
+output$yearControl_micro <- renderUI({
+    selectInput("year_micro", "Choisissez une année:", unique(microfaunes$date_obs))
+})
+
+output$yearControl_papi <- renderUI({
+    selectInput("year_papi", "Choisissez une année:", unique(papillons$date_obs))
+})
+
+output$yearControl_odo <- renderUI({
+    selectInput("year_odo", "Choisissez une année:", unique(odonates$date_obs))
+})
+
+output$yearControl_veg <- renderUI({
+    selectInput("year_veg", "Choisissez une année:", unique(vegetation$date_obs))
 })
 
 ###########################
@@ -239,7 +261,7 @@ output$beta_micro <- renderInfoBox({
 
   beta <- compute_beta(microfaunes, input$year_micro)
 
-  infoBox("Béta-diversité:", round(beta,3), icon = icon("bug"), fill = TRUE, color = "green")
+  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
 })
 
 ##########
@@ -301,5 +323,454 @@ output$micro_compo <- renderPlotly({
 
 })
 
+
+###########################
+##### PAPILLONS TAB  ####
+###########################
+
+output$papi_carto <- renderLeaflet({
+
+  geom_sf <- compute_desc_comm(papillons, sites, input$year_papi)
+
+  pal <- colorNumeric(
+    palette = "Spectral",
+    domain = geom_sf$rich_sp,
+    reverse = TRUE
+  )
+
+  popup <- paste0("<strong>Code du site: </strong>",
+                  geom_sf$site_code,
+                  "</br><strong>Nombre d'espèces: </strong>",
+                  geom_sf$rich_sp,
+                  "</br><strong>Régularité des espèces: </strong>",
+                  round(geom_sf$eveness, 2),
+                  "</br><strong>Indice de Shanon-Weaver: </strong>",
+                  round(geom_sf$div, 2)
+                )
+
+  leaflet(geom_sf) %>%
+    addProviderTiles("OpenStreetMap.Mapnik", group = "Mapnik") %>%
+    addProviderTiles("Stamen.TonerLite",
+                     group = "Toner") %>%
+    addProviderTiles("Esri.WorldTopoMap",
+                     group = "Topo") %>%
+    addProviderTiles("CartoDB.Positron", group = "CartoDB") %>%
+    addLayersControl(baseGroups = c("Mapnik", "Toner", "Topo", "CartoDB"),
+                     options = layersControlOptions(collapsed = TRUE)) %>%
+    addCircleMarkers(
+         color = ~pal(rich_sp),
+         stroke = TRUE, fillOpacity = 0.8,
+         popup = popup
+       ) %>%
+    addLegend("bottomright", pal = pal, values = ~rich_sp,
+      title = "Richesse spécifique",
+      opacity = 1
+    )
+})
+
+##########
+
+output$papi_sp_beta <- renderPlotly({
+
+  SCBD <- compute_beta_scbd(papillons, input$year_papi)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(SCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(SCBD)){
+   p %<>% add_trace(x = SCBD[i,"val"], name = SCBD[i,"sp"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
+output$beta_papi <- renderInfoBox({
+
+  beta <- compute_beta(papillons, input$year_papi)
+
+  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
+})
+
+##########
+
+output$papi_sites_beta <- renderPlotly({
+
+  LCBD <- compute_beta_lcbd(papillons, input$year_papi)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(LCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(LCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(LCBD)){
+   p %<>% add_trace(x = LCBD[i,"val"], name = LCBD[i,"site"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
+output$papi_compo <- renderPlotly({
+
+  data <- papillons %>% filter(date_obs==input$year_papi) %>%
+    select(taxa, count, site_code) %>%
+    group_by(taxa, site_code) %>%
+    summarise(count=sum(count)) %>%
+    group_by(site_code) %>% mutate(n_tot_obs = sum(count)) %>% mutate(obs_rel = count/n_tot_obs)
+
+  data <- reshape2::dcast(data, site_code ~ taxa, value.var="obs_rel")
+
+  colors = colorRampPalette(brewer.pal(9,"Spectral"))(ncol(data)-1)
+
+  p <- plot_ly(data, type = 'bar')
+  for(i in 2:ncol(data)){
+   p %<>% add_trace(x = ~site_code, y = data[,i], name = names(data)[i], marker = list(color = colors[i-1]))
+  }
+  p %<>% layout(yaxis = list(title = 'Abondance relative'), barmode = 'stack')
+
+})
+
+
+###########################
+##### ODONATES TAB  ####
+###########################
+
+output$odo_carto <- renderLeaflet({
+
+  geom_sf <- compute_desc_comm(odonates, sites, input$year_odo)
+
+  pal <- colorNumeric(
+    palette = "Spectral",
+    domain = geom_sf$rich_sp,
+    reverse = TRUE
+  )
+
+  popup <- paste0("<strong>Code du site: </strong>",
+                  geom_sf$site_code,
+                  "</br><strong>Nombre d'espèces: </strong>",
+                  geom_sf$rich_sp,
+                  "</br><strong>Régularité des espèces: </strong>",
+                  round(geom_sf$eveness, 2),
+                  "</br><strong>Indice de Shanon-Weaver: </strong>",
+                  round(geom_sf$div, 2)
+                )
+
+  leaflet(geom_sf) %>%
+    addProviderTiles("OpenStreetMap.Mapnik", group = "Mapnik") %>%
+    addProviderTiles("Stamen.TonerLite",
+                     group = "Toner") %>%
+    addProviderTiles("Esri.WorldTopoMap",
+                     group = "Topo") %>%
+    addProviderTiles("CartoDB.Positron", group = "CartoDB") %>%
+    addLayersControl(baseGroups = c("Mapnik", "Toner", "Topo", "CartoDB"),
+                     options = layersControlOptions(collapsed = TRUE)) %>%
+    addCircleMarkers(
+         color = ~pal(rich_sp),
+         stroke = TRUE, fillOpacity = 0.8,
+         popup = popup
+       ) %>%
+    addLegend("bottomright", pal = pal, values = ~rich_sp,
+      title = "Richesse spécifique",
+      opacity = 1
+    )
+})
+
+##########
+
+output$odo_sp_beta <- renderPlotly({
+
+  SCBD <- compute_beta_scbd(odonates, input$year_odo)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(SCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(SCBD)){
+   p %<>% add_trace(x = SCBD[i,"val"], name = SCBD[i,"sp"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
+output$beta_odo <- renderInfoBox({
+
+  beta <- compute_beta(odonates, input$year_odo)
+
+  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
+})
+
+##########
+
+output$odo_sites_beta <- renderPlotly({
+
+  LCBD <- compute_beta_lcbd(odonates, input$year_odo)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(LCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(LCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(LCBD)){
+   p %<>% add_trace(x = LCBD[i,"val"], name = LCBD[i,"site"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
+output$odo_compo <- renderPlotly({
+
+  data <- odonates %>% filter(date_obs==input$year_odo) %>%
+    select(taxa, count, site_code) %>%
+    group_by(taxa, site_code) %>%
+    summarise(count=sum(count)) %>%
+    group_by(site_code) %>% mutate(n_tot_obs = sum(count)) %>% mutate(obs_rel = count/n_tot_obs)
+
+  data <- reshape2::dcast(data, site_code ~ taxa, value.var="obs_rel")
+
+  colors = colorRampPalette(brewer.pal(9,"Spectral"))(ncol(data)-1)
+
+  p <- plot_ly(data, type = 'bar')
+  for(i in 2:ncol(data)){
+   p %<>% add_trace(x = ~site_code, y = data[,i], name = names(data)[i], marker = list(color = colors[i-1]))
+  }
+  p %<>% layout(yaxis = list(title = 'Abondance relative'), barmode = 'stack')
+
+})
+
+
+###########################
+##### VEGETATION TAB  ####
+###########################
+
+output$veg_carto <- renderLeaflet({
+
+  geom_sf <- compute_desc_comm(vegetation, sites, input$year_veg)
+
+  pal <- colorNumeric(
+    palette = "Spectral",
+    domain = geom_sf$rich_sp,
+    reverse = TRUE
+  )
+
+  popup <- paste0("<strong>Code du site: </strong>",
+                  geom_sf$site_code,
+                  "</br><strong>Nombre d'espèces: </strong>",
+                  geom_sf$rich_sp,
+                  "</br><strong>Régularité des espèces: </strong>",
+                  round(geom_sf$eveness, 2),
+                  "</br><strong>Indice de Shanon-Weaver: </strong>",
+                  round(geom_sf$div, 2)
+                )
+
+  leaflet(geom_sf) %>%
+    addProviderTiles("OpenStreetMap.Mapnik", group = "Mapnik") %>%
+    addProviderTiles("Stamen.TonerLite",
+                     group = "Toner") %>%
+    addProviderTiles("Esri.WorldTopoMap",
+                     group = "Topo") %>%
+    addProviderTiles("CartoDB.Positron", group = "CartoDB") %>%
+    addLayersControl(baseGroups = c("Mapnik", "Toner", "Topo", "CartoDB"),
+                     options = layersControlOptions(collapsed = TRUE)) %>%
+    addCircleMarkers(
+         color = ~pal(rich_sp),
+         stroke = TRUE, fillOpacity = 0.8,
+         popup = popup
+       ) %>%
+    addLegend("bottomright", pal = pal, values = ~rich_sp,
+      title = "Richesse spécifique",
+      opacity = 1
+    )
+})
+
+##########
+
+output$veg_sp_beta <- renderPlotly({
+
+  SCBD <- compute_beta_scbd(vegetation, input$year_veg)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(SCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(SCBD)){
+   p %<>% add_trace(x = SCBD[i,"val"], name = SCBD[i,"sp"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
+output$beta_veg <- renderInfoBox({
+
+  beta <- compute_beta(vegetation, input$year_veg)
+
+  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
+})
+
+##########
+
+output$veg_sites_beta <- renderPlotly({
+
+  LCBD <- compute_beta_lcbd(vegetation, input$year_veg)
+
+  colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(LCBD))
+
+  m <- list(
+    l = 30,
+    r = 30,
+    b = 30,
+    t = 30,
+    pad = 4
+  )
+
+  p <- plot_ly(LCBD, type = 'bar', orientation = 'h', showlegend = FALSE)
+  for(i in 1:nrow(LCBD)){
+   p %<>% add_trace(x = LCBD[i,"val"], name = LCBD[i,"site"], marker = list(color = colors[i]))
+  }
+  p %<>% layout(barmode = 'stack',
+          margin = m,
+          xaxis = list(
+            title = "",
+            showline = FALSE,
+            showticklabels = TRUE,
+            tickformat = "%",
+            range = c(0,1)
+          ),
+          yaxis = list(
+            title = "",
+            zeroline = FALSE,
+            showline = FALSE,
+            showticklabels = FALSE,
+            showgrid = FALSE))
+})
+
+##########
+
+output$veg_compo <- renderPlotly({
+
+  data <- vegetation %>% filter(date_obs==input$year_veg) %>%
+    select(taxa, count, site_code) %>%
+    group_by(taxa, site_code) %>%
+    summarise(count=sum(count)) %>%
+    group_by(site_code) %>% mutate(n_tot_obs = sum(count)) %>% mutate(obs_rel = count/n_tot_obs)
+
+  data <- reshape2::dcast(data, site_code ~ taxa, value.var="obs_rel")
+
+  colors = colorRampPalette(brewer.pal(9,"Spectral"))(ncol(data)-1)
+
+  p <- plot_ly(data, type = 'bar')
+  for(i in 2:ncol(data)){
+   p %<>% add_trace(x = ~site_code, y = data[,i], name = names(data)[i], marker = list(color = colors[i-1]))
+  }
+  p %<>% layout(yaxis = list(title = 'Abondance relative'), barmode = 'stack')
+
+})
 
 }
