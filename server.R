@@ -4,7 +4,7 @@ library(lubridate)
 library(plotly)
 library(RColorBrewer)
 library(vegan)
-devtools::load_all("../rcoleo/")
+library(rcoleo)
 source("./utils.R")
 
 server <- function(input, output, session) {
