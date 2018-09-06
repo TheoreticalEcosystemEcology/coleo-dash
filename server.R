@@ -180,6 +180,8 @@ output$download_shp <- downloadHandler(
 
 output$micro_carto <- renderLeaflet({
 
+  req(microfaunes, sites, input$year_micro)
+
   geom_sf <- compute_desc_comm(microfaunes, sites, input$year_micro)
 
   pal <- colorNumeric(
@@ -222,6 +224,8 @@ output$micro_carto <- renderLeaflet({
 
 output$micro_sp_beta <- renderPlotly({
 
+  req(microfaunes, input$year_micro)
+
   SCBD <- compute_beta_scbd(microfaunes, input$year_micro)
 
   colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
@@ -259,6 +263,8 @@ output$micro_sp_beta <- renderPlotly({
 
 output$beta_micro <- renderInfoBox({
 
+  req(microfaunes, input$year_micro)
+
   beta <- compute_beta(microfaunes, input$year_micro)
 
   valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
@@ -267,6 +273,8 @@ output$beta_micro <- renderInfoBox({
 ##########
 
 output$micro_sites_beta <- renderPlotly({
+
+  req(microfaunes, input$year_micro)
 
   LCBD <- compute_beta_lcbd(microfaunes, input$year_micro)
 
@@ -305,6 +313,8 @@ output$micro_sites_beta <- renderPlotly({
 
 output$micro_compo <- renderPlotly({
 
+req(microfaunes, input$year_micro)
+
   data <- microfaunes %>% filter(date_obs==input$year_micro) %>%
     select(taxa, count, site_code) %>%
     group_by(taxa, site_code) %>%
@@ -329,6 +339,8 @@ output$micro_compo <- renderPlotly({
 ###########################
 
 output$papi_carto <- renderLeaflet({
+
+req(papillons, sites, input$year_papi)
 
   geom_sf <- compute_desc_comm(papillons, sites, input$year_papi)
 
@@ -372,6 +384,10 @@ output$papi_carto <- renderLeaflet({
 
 output$papi_sp_beta <- renderPlotly({
 
+
+  req(papillons, input$year_papi)
+
+
   SCBD <- compute_beta_scbd(papillons, input$year_papi)
 
   colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
@@ -409,6 +425,8 @@ output$papi_sp_beta <- renderPlotly({
 
 output$beta_papi <- renderInfoBox({
 
+  req(papillons, input$year_papi)
+
   beta <- compute_beta(papillons, input$year_papi)
 
   valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
@@ -417,6 +435,8 @@ output$beta_papi <- renderInfoBox({
 ##########
 
 output$papi_sites_beta <- renderPlotly({
+
+  req(papillons, input$year_papi)
 
   LCBD <- compute_beta_lcbd(papillons, input$year_papi)
 
@@ -455,6 +475,8 @@ output$papi_sites_beta <- renderPlotly({
 
 output$papi_compo <- renderPlotly({
 
+  req(papillons, input$year_papi)
+
   data <- papillons %>% filter(date_obs==input$year_papi) %>%
     select(taxa, count, site_code) %>%
     group_by(taxa, site_code) %>%
@@ -479,6 +501,8 @@ output$papi_compo <- renderPlotly({
 ###########################
 
 output$odo_carto <- renderLeaflet({
+
+  req(odonates, sites, input$year_odo)
 
   geom_sf <- compute_desc_comm(odonates, sites, input$year_odo)
 
@@ -522,6 +546,8 @@ output$odo_carto <- renderLeaflet({
 
 output$odo_sp_beta <- renderPlotly({
 
+  req(odonates, input$year_odo)
+
   SCBD <- compute_beta_scbd(odonates, input$year_odo)
 
   colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
@@ -559,6 +585,9 @@ output$odo_sp_beta <- renderPlotly({
 
 output$beta_odo <- renderInfoBox({
 
+
+  req(odonates, input$year_odo)
+
   beta <- compute_beta(odonates, input$year_odo)
 
   valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
@@ -567,6 +596,8 @@ output$beta_odo <- renderInfoBox({
 ##########
 
 output$odo_sites_beta <- renderPlotly({
+
+  req(odonates, input$year_odo)
 
   LCBD <- compute_beta_lcbd(odonates, input$year_odo)
 
@@ -605,6 +636,8 @@ output$odo_sites_beta <- renderPlotly({
 
 output$odo_compo <- renderPlotly({
 
+  req(odonates, input$year_odo)
+
   data <- odonates %>% filter(date_obs==input$year_odo) %>%
     select(taxa, count, site_code) %>%
     group_by(taxa, site_code) %>%
@@ -629,6 +662,8 @@ output$odo_compo <- renderPlotly({
 ###########################
 
 output$veg_carto <- renderLeaflet({
+
+  req(vegetation, sites, input$year_veg)
 
   geom_sf <- compute_desc_comm(vegetation, sites, input$year_veg)
 
@@ -672,6 +707,9 @@ output$veg_carto <- renderLeaflet({
 
 output$veg_sp_beta <- renderPlotly({
 
+
+  req(vegetation, input$year_veg)
+
   SCBD <- compute_beta_scbd(vegetation, input$year_veg)
 
   colors = colorRampPalette(rev(brewer.pal(9,"YlGnBu")))(nrow(SCBD))
@@ -709,6 +747,8 @@ output$veg_sp_beta <- renderPlotly({
 
 output$beta_veg <- renderInfoBox({
 
+  req(vegetation, input$year_veg)
+
   beta <- compute_beta(vegetation, input$year_veg)
 
   valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
@@ -717,6 +757,8 @@ output$beta_veg <- renderInfoBox({
 ##########
 
 output$veg_sites_beta <- renderPlotly({
+
+  req(vegetation, input$year_veg)
 
   LCBD <- compute_beta_lcbd(vegetation, input$year_veg)
 
@@ -754,6 +796,8 @@ output$veg_sites_beta <- renderPlotly({
 ##########
 
 output$veg_compo <- renderPlotly({
+
+  req(vegetation, input$year_veg)
 
   data <- vegetation %>% filter(date_obs==input$year_veg) %>%
     select(taxa, count, site_code) %>%
