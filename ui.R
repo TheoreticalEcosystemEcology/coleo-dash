@@ -1,4 +1,5 @@
 library(shinydashboard)
+library(shinyWidgets)
 library(leaflet)
 library(sf)
 library(dplyr)
@@ -43,7 +44,11 @@ ui <- dashboardPage(
           )
         ),
         fluidRow(
-          column(10, leafletOutput("cells_map")),
+          column(10, box(
+            width = 12,
+            status = "primary",
+            addSpinner(leafletOutput("cells_map"),spin = "circle", color = "#2A6497FF")
+          )),
           column(2,
             div(downloadButton('download_shp', 'Exporter le shapefile'), style="width:140px;margin:10px")
           )
@@ -68,20 +73,20 @@ ui <- dashboardPage(
           box(width = 12,
             status = "primary",
             h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("papi_sp_beta", height = "90px"),
+            addSpinner(plotlyOutput("papi_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
             h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("papi_sites_beta", height = "90px")
+            addSpinner(plotlyOutput("papi_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
             h4("Composition des communautées", align="center", style="font-weight:700;"),
-            plotlyOutput("papi_compo")
+            addSpinner(plotlyOutput("papi_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
             h4("Richesse spécifique", align="center", style="font-weight:700;"),
-            leafletOutput("papi_carto")
+            addSpinner(leafletOutput("papi_carto"),spin = "circle", color = "#2A6497FF")
           )
         )
       ),
@@ -104,20 +109,20 @@ ui <- dashboardPage(
           box(width = 12,
             status = "primary",
             h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("micro_sp_beta", height = "90px"),
+            addSpinner(plotlyOutput("micro_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
             h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("micro_sites_beta", height = "90px")
+            addSpinner(plotlyOutput("micro_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
             h4("Composition des communautées", align="center", style="font-weight:700;"),
-            plotlyOutput("micro_compo")
+            addSpinner(plotlyOutput("micro_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
             h4("Richesse spécifique", align="center", style="font-weight:700;"),
-            leafletOutput("micro_carto")
+            addSpinner(leafletOutput("micro_carto"),spin = "circle", color = "#2A6497FF")
           )
         )
       ),
@@ -140,20 +145,20 @@ ui <- dashboardPage(
           box(width = 12,
             status = "primary",
             h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("odo_sp_beta", height = "90px"),
+            addSpinner(plotlyOutput("odo_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
             h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("odo_sites_beta", height = "90px")
+            addSpinner(plotlyOutput("odo_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
             h4("Composition des communautées", align="center", style="font-weight:700;"),
-            plotlyOutput("odo_compo")
+            addSpinner(plotlyOutput("odo_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
             h4("Richesse spécifique", align="center", style="font-weight:700;"),
-            leafletOutput("odo_carto")
+            addSpinner(leafletOutput("odo_carto"),spin = "circle", color = "#2A6497FF")
           )
         )
       ),
@@ -176,20 +181,20 @@ ui <- dashboardPage(
           box(width = 12,
             status = "primary",
             h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("veg_sp_beta", height = "90px"),
+            addSpinner(plotlyOutput("veg_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
             h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
-            plotlyOutput("veg_sites_beta", height = "90px")
+            addSpinner(plotlyOutput("veg_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
             h4("Composition des communautées", align="center", style="font-weight:700;"),
-            plotlyOutput("veg_compo")
+            addSpinner(plotlyOutput("veg_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
             h4("Richesse spécifique", align="center", style="font-weight:700;"),
-            leafletOutput("veg_carto")
+            addSpinner(leafletOutput("veg_carto"),spin = "circle", color = "#2A6497FF")
           )
         )
       )
