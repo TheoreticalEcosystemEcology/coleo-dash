@@ -34,7 +34,7 @@ withProgress(message = "Retrait des données depuis le serveur", value = NULL, {
   sites <- select(rcoleo::sf_sites(), site_code, off_station_code_id, type_milieu = type, geometry, site_id = id)
 
   # On prépare les jeux de données pour chacun des types de campagnes
-  microfaunes <- subset(all_obs, type == "microfaunes")
+  microfaunes <- subset(all_obs, type == "insectes_sol")
   microfaunes %<>% filter(taxa != "inconnu")
 
   papillons <- subset(all_obs, type == "papilionidés")

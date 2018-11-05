@@ -12,7 +12,7 @@ ui <- dashboardPage(
     sidebarMenu(
       menuItem("Cellules", tabName = "cellules", icon = icon("map")),
       menuItem("Papillons", tabName = "papillons", icon = icon("dashboard")),
-      menuItem("Microfaunes", tabName = "microfaunes", icon = icon("dashboard")),
+      menuItem("Insectes du sol", tabName = "insectes_sol", icon = icon("dashboard")),
       menuItem("Odonates", tabName = "odonates", icon = icon("dashboard")),
       menuItem("Végétation", tabName = "vegetation", icon = icon("dashboard"))
     )),
@@ -93,9 +93,9 @@ ui <- dashboardPage(
       #######################
       ###### Microfaunes ####
       #######################
-      tabItem(tabName = "microfaunes",
+      tabItem(tabName = "insectes_sol",
         fluidRow(
-          h2("Analyse sur la microfaune", style="margin:15px;")
+          h2("Analyse sur les insectes du sol", style="margin:15px;")
         ),
         fluidRow(
         column(4,
@@ -127,7 +127,7 @@ ui <- dashboardPage(
         )
       ),
       #######################
-      ###### Microfaunes ####
+      ###### Odonates ####
       #######################
       tabItem(tabName = "odonates",
         fluidRow(
