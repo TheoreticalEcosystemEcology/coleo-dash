@@ -18,7 +18,7 @@ compute_desc_comm <- function(dat, sites, year){
 make_comm <- function(dat, year){
 
   dat <- dat %>% filter(date_obs == year) %>% select(site_code,date_obs,taxa,count) %>% group_by(site_code,date_obs, taxa) %>% summarise(count=sum(count))
-  comm_df <- reshape2::dcast(dat, site_code ~ taxa, value.var="count", fill = 0, fun.aggregate=sum)
+  comm_df <- reshape2::dcast(dat, site_code ~ taxa, value.var="count", fill = 0, fun.aggregate=sum, drop = TRUE, na.rm = TRUE)
   row.names(comm_df) <- comm_df[,1]
   comm_df <- as.matrix(comm_df[,-1])
 
