@@ -105,6 +105,8 @@ data_map <- reactive({
   map_data <- merge(cells,df,by="cell_code",all=TRUE)
   map_data[which(is.na(map_data$n)),"n"] <- 0
 
+  names(st_geometry(map_data)) <- NULL
+
   return(list(data=map_data, legend=legend))
 })
 
@@ -127,6 +129,7 @@ output$cells_map <- renderLeaflet({
                   ": </strong>",
                   data_map()$data$n)
 
+
   leaflet(data_map()$data) %>%
     addProviderTiles("OpenStreetMap.Mapnik", group = "Mapnik") %>%
     addProviderTiles("Stamen.TonerLite",
@@ -137,7 +140,7 @@ output$cells_map <- renderLeaflet({
     addLayersControl(baseGroups = c("Mapnik", "Toner", "Topo", "CartoDB"),
                      options = layersControlOptions(collapsed = TRUE)) %>%
     addPolygons(stroke = TRUE, smoothFactor = 0.5, fillOpacity = 0.8, color = "#323232",
-    fillColor = ~pal(n), popup = popup, weight = 2) %>%
+    fillColor = ~pal(n), weight = 2, popup = popup) %>%
     addLegend("bottomright", pal = pal, values = ~n,
       title = data_map()$legend,
       opacity = 1
@@ -181,6 +184,7 @@ output$download_shp <- downloadHandler(
 output$micro_carto <- renderLeaflet({
 
   req(microfaunes, sites, input$year_micro)
+
 
   geom_sf <- compute_desc_comm(microfaunes, sites, input$year_micro)
 
@@ -267,7 +271,7 @@ output$beta_micro <- renderInfoBox({
 
   beta <- compute_beta(microfaunes, input$year_micro)
 
-  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
+  valueBox(round(beta,3),"beta-diversité", icon = icon("bug"), color = "green")
 })
 
 ##########
@@ -429,7 +433,7 @@ output$beta_papi <- renderInfoBox({
 
   beta <- compute_beta(papillons, input$year_papi)
 
-  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
+  valueBox(round(beta,3),"beta-diversité", icon = icon("bug"), color = "green")
 })
 
 ##########
@@ -590,7 +594,7 @@ output$beta_odo <- renderInfoBox({
 
   beta <- compute_beta(odonates, input$year_odo)
 
-  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
+  valueBox(round(beta,3),"beta-diversité", icon = icon("bug"), color = "green")
 })
 
 ##########
@@ -751,7 +755,7 @@ output$beta_veg <- renderInfoBox({
 
   beta <- compute_beta(vegetation, input$year_veg)
 
-  valueBox(round(beta,3),"Béta-diversité", icon = icon("bug"), color = "green")
+  valueBox(round(beta,3),"beta-diversité", icon = icon("bug"), color = "green")
 })
 
 ##########
