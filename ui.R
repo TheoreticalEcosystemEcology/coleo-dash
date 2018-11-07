@@ -72,16 +72,16 @@ ui <- dashboardPage(
         column(8,
           box(width = 12,
             status = "primary",
-            h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des espèces à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("papi_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
-            h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des sites à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("papi_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
-            h4("Composition des communautées", align="center", style="font-weight:700;"),
+            h4("Composition des communautés", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("papi_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
@@ -108,16 +108,16 @@ ui <- dashboardPage(
         column(8,
           box(width = 12,
             status = "primary",
-            h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des espèces à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("micro_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
-            h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des sites à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("micro_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
-            h4("Composition des communautées", align="center", style="font-weight:700;"),
+            h4("Composition des communautés", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("micro_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
@@ -144,16 +144,16 @@ ui <- dashboardPage(
         column(8,
           box(width = 12,
             status = "primary",
-            h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des espèces à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("odo_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
-            h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des sites à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("odo_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
-            h4("Composition des communautées", align="center", style="font-weight:700;"),
+            h4("Composition des communautés", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("odo_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
@@ -180,16 +180,16 @@ ui <- dashboardPage(
         column(8,
           box(width = 12,
             status = "primary",
-            h4("Contribution des espèces à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des espèces à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("veg_sp_beta", height = "90px"),spin = "circle", color = "#2A6497FF"),
-            h4("Contribution des sites à la béta-diversité (%)", align="center", style="font-weight:700;"),
+            h4("Contribution des sites à la beta-diversité (%)", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("veg_sites_beta", height = "90px"),spin = "circle", color = "#2A6497FF")
           )
         )
         ),
         fluidRow(
           box(width = 6, status = "primary",
-            h4("Composition des communautées", align="center", style="font-weight:700;"),
+            h4("Composition des communautés", align="center", style="font-weight:700;"),
             addSpinner(plotlyOutput("veg_compo"),spin = "circle", color = "#2A6497FF")
           ),
           box(width = 6, status = "primary",
